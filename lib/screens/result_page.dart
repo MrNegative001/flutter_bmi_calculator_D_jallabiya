@@ -8,7 +8,8 @@ import '../components/appbar_components.dart';
 
 class ResultPage extends StatelessWidget {
   ResultPage(
-      {required this.resultValue,
+      {super.key,
+      required this.resultValue,
       required this.bmiResult,
       required this.feedback,
       required this.resulColor});
@@ -55,12 +56,20 @@ class ResultPage extends StatelessWidget {
                 animation: true,
                 animationDuration: 1200,
                 circularStrokeCap: CircularStrokeCap.round,
-                center: Text(
-                  resultValue,
-                  style: TextStyle(
-                    fontSize: 70,
-                    fontWeight: FontWeight.bold,
-                  ),
+                center: TweenAnimationBuilder<double>(
+                  tween:
+                      Tween<double>(begin: 0, end: double.parse(resultValue)),
+                  duration: Duration(milliseconds: 1200),
+                  builder: (BuildContext context, double value, Widget? child) {
+                    return Text(
+                      value.toStringAsFixed(1),
+                      style: TextStyle(
+                        fontSize: 70,
+                        fontWeight: FontWeight.bold,
+                        color: resulColor,
+                      ),
+                    );
+                  },
                 ),
                 progressColor: resulColor,
                 footer: Text(
@@ -76,8 +85,8 @@ class ResultPage extends StatelessWidget {
               flex: 4,
               child: Card(
                 color: themeController.isDarkMode.value
-                    ? Color(0xFF373737)
-                    : Colors.white,
+                    ? kCardColorDark
+                    : kCardColorLight,
                 child: Padding(
                   padding: const EdgeInsets.all(15),
                   child: Text(

@@ -12,11 +12,14 @@ class RectangularButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),
-      constraints: BoxConstraints.tightFor(width: 50, height: 50),
-      fillColor: kActiveColor,
+      constraints: BoxConstraints.tightFor(
+        width: kRectangularButtonSize,
+        height: kRectangularButtonSize,
+      ),
+      fillColor: kRectangularButtonColor,
       child: Icon(
         icon,
-        size: 20,
+        size: kRectangularButtonIconSize,
         color: Colors.white,
       ),
     );
@@ -32,11 +35,11 @@ class FooterButton extends StatelessWidget {
     return GestureDetector(
       onTap: () => onPressed(),
       child: Card(
-        color: kActiveColor,
+        color: kFooterButtonColor,
         child: Center(
           child: Text(
             buttonText,
-            style: kTextStyles.copyWith(color: Colors.white),
+            style: kFooterButtonTextStyle,
           ),
         ),
       ),

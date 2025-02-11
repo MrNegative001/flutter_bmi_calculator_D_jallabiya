@@ -45,7 +45,7 @@ class appBarActions extends StatelessWidget {
               Icons.wb_sunny,
               color: themeController.isDarkMode.value
                   ? Color(0xFF242424)
-                  : kActiveColor,
+                  : kPrimaryColor,
             ),
             onPressed: themeController.setLightMode,
           ),
@@ -53,7 +53,7 @@ class appBarActions extends StatelessWidget {
             icon: Icon(
               Icons.nightlight_round,
               color: themeController.isDarkMode.value
-                  ? kActiveColor
+                  ? kPrimaryColor
                   : Color(0xFFD1D9E6),
             ),
             onPressed: themeController.setDarkMode,

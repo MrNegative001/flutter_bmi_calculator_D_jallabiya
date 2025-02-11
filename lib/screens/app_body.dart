@@ -7,9 +7,13 @@ import 'package:get/get.dart';
 import '../main.dart'; // Import ThemeController
 import '../components/appbar_components.dart';
 import '../components/buttons.dart';
+import '../components/value_card.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
 }
 
@@ -54,23 +58,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       }),
                       child: Card(
                         color: selectedGender == Gender.male
-                            ? kActiveColor
-                            : Colors.white,
+                            ? kPrimaryColor
+                            : kCardColorLight,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(FontAwesomeIcons.mars,
                                 size: 25,
                                 color: selectedGender == Gender.male
-                                    ? Colors.white
-                                    : kActiveColor),
+                                    ? kCardColorLight
+                                    : kPrimaryColor),
                             SizedBox(width: 15),
                             Text(
                               'MALE',
                               style: kTextStyles.copyWith(
                                   color: selectedGender == Gender.male
-                                      ? Colors.white
-                                      : kActiveColor),
+                                      ? kCardColorLight
+                                      : kPrimaryColor),
                             ),
                           ],
                         ),
@@ -85,8 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       }),
                       child: Card(
                         color: selectedGender == Gender.female
-                            ? kActiveColor
-                            : Colors.white,
+                            ? kPrimaryColor
+                            : kCardColorLight,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -94,16 +98,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               FontAwesomeIcons.venus,
                               size: 25,
                               color: selectedGender == Gender.female
-                                  ? Colors.white
-                                  : kActiveColor,
+                                  ? kCardColorLight
+                                  : kPrimaryColor,
                             ),
                             SizedBox(width: 15),
                             Text(
                               'FEMALE',
                               style: kTextStyles.copyWith(
                                 color: selectedGender == Gender.female
-                                    ? Colors.white
-                                    : kActiveColor,
+                                    ? kCardColorLight
+                                    : kPrimaryColor,
                               ),
                             ),
                           ],
@@ -123,8 +127,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     child: Card(
                         color: themeController.isDarkMode.value
-                            ? Color(0xFF373737)
-                            : Colors.white,
+                            ? kCardColorDark
+                            : kCardColorLight,
                         child: Padding(
                           padding: const EdgeInsets.all(25),
                           child: Column(
@@ -142,14 +146,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       quarterTurns: -1,
                                       child: SliderTheme(
                                         data: SliderTheme.of(context).copyWith(
-                                          activeTrackColor: kActiveColor,
+                                          activeTrackColor: kSliderActiveColor,
                                           inactiveTrackColor:
-                                              kInactiveLightMode,
+                                              kSliderInactiveColor,
                                           overlayColor:
-                                              kActiveColor.withOpacity(
-                                                  0.2), // Light blue overlay
+                                              kSliderOverlayColor, // Light teal overlay
                                           trackHeight:
-                                              20, // Thickness of the track
+                                              kSliderTrackHeight, // Thickness of the track
                                           thumbShape:
                                               SliderComponentShape.noThumb,
                                         ),
@@ -168,17 +171,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
-                                      children: [
-                                        HorizontalLine(),
-                                        HorizontalLine(),
-                                        HorizontalLine(),
-                                        HorizontalLine(),
-                                        HorizontalLine(),
-                                        HorizontalLine(),
-                                        HorizontalLine(),
-                                        HorizontalLine(),
-                                        HorizontalLine(),
-                                      ],
+                                      children: List.generate(
+                                          9, (index) => HorizontalLine()),
                                     ),
                                     Column(
                                       mainAxisAlignment:
@@ -208,89 +202,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Expanded(
-                          child: Card(
-                              color: themeController.isDarkMode.value
-                                  ? Color(0xFF373737)
-                                  : Colors.white,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text('WEIGHT', style: kTextStyles),
-                                  Text('$weight', style: kLargeTextStyles),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      RectangularButton(
-                                        icon: FontAwesomeIcons.minus,
-                                        onTap: () {
-                                          setState(() {
-                                            if (weight > 35) {
-                                              weight--;
-                                            }
-                                          });
-                                        },
-                                      ),
-                                      SizedBox(
-                                        width: 30,
-                                      ),
-                                      RectangularButton(
-                                        icon: FontAwesomeIcons.plus,
-                                        onTap: () {
-                                          setState(() {
-                                            if (weight < 300) {
-                                              weight++;
-                                            }
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              )),
+                          child: ValueCard(
+                            title: 'WEIGHT',
+                            value: weight,
+                            onDecrement: () => setState(() =>
+                                weight = weight > 35 ? weight - 1 : weight),
+                            onIncrement: () => setState(() =>
+                                weight = weight < 300 ? weight + 1 : weight),
+                          ),
                         ),
                         SizedBox(height: 15),
                         Expanded(
-                          child: Card(
-                              color: themeController.isDarkMode.value
-                                  ? Color(0xFF373737)
-                                  : Colors.white,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text('AGE', style: kTextStyles),
-                                  Text('$age', style: kLargeTextStyles),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      RectangularButton(
-                                        icon: FontAwesomeIcons.minus,
-                                        onTap: () {
-                                          setState(() {
-                                            if (age > 10) {
-                                              age--;
-                                            }
-                                          });
-                                        },
-                                      ),
-                                      SizedBox(
-                                        width: 30,
-                                      ),
-                                      RectangularButton(
-                                        icon: FontAwesomeIcons.plus,
-                                        onTap: () {
-                                          setState(() {
-                                            if (age < 75) {
-                                              age++;
-                                            }
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              )),
+                          child: ValueCard(
+                            title: 'AGE',
+                            value: age,
+                            onDecrement: () =>
+                                setState(() => age = age > 10 ? age - 1 : age),
+                            onIncrement: () =>
+                                setState(() => age = age < 75 ? age + 1 : age),
+                          ),
                         ),
                       ],
                     ),
@@ -307,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       CalculatorBrain(height: height, weight: weight);
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return ResultPage(
-                      resultValue: calculate.CalculateBMI(),
+                      resultValue: calculate.calculateBMI(),
                       bmiResult: calculate.bmiResult(),
                       feedback: calculate.bmiFeedBack(),
                       resulColor: calculate.bmiColorResult(),
@@ -323,7 +253,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+
 class HorizontalLine extends StatelessWidget {
+  const HorizontalLine({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
